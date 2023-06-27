@@ -35,11 +35,28 @@ const CreateRoom = (req, res, next) => {
 
 const getRooms = async (req, res, next) => {
     try {
-        const Rooms = await Room.findAll()
+        const { status } = req.query;
+        StatusOfRooms = ['Ready', 'Maintaining', 'Occupied'];
+         
+        let Rooms = [];
+        if (!status) {
+            Rooms = await Room.findAll()
+        }
+        else if (status) {
+            CapitalStatus = status.charAt(0).toUpperCase() + status.slice(1);
+            if (!StatusOfRooms.includes(CapitalStatus)) {
+                const error = new CustomError(`There is no room with status:${status}`, 404)
+                next(error)
+            }
+            else {
+                Rooms = await Room.findAll({ where: { Room_status: CapitalStatus } })
+            }
+        }
+
         res.status(200).json({ 'Message': 'Success', 'data': Rooms })
 
     } catch (err) {
-        const error = new CustomError('internal Server Error', 500);
+        const error = new CustomError(err.message, 500);
         next(error)
     }
 }
@@ -86,5 +103,8 @@ const DeleteRoom = async (req, res, next) => {
         next(error)
     }
 }
-
-module.exports = { CreateRoom, getRooms, updateRoom, DeleteRoom };
+const getRoomsWithStatus = async (req, res, next) => {
+    const status = req.query;
+    console.log(status);
+}
+module.exports = { CreateRoom, getRooms, updateRoom, DeleteRoom, getRoomsWithStatus };

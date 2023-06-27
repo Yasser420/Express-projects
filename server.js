@@ -28,6 +28,7 @@ app.use('*', (req, res, next) => {
     next(error);
 })
 app.use(Errorhandler);
+
 app.listen(3000, async () => {
     console.log('Start listening on port 3000... ');
     await sequelize.authenticate()
