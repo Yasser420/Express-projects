@@ -10,4 +10,4 @@ const RoomImagesContainer = multer({ dest: 'RoomImagesContainer' });
 router.route('/rooms').post(RoomImagesContainer.single('Image'), CreateRoom).get(getRooms)
 router.route('/rooms/:id').patch(updateRoom).delete(DeleteRoom);
 
-module.exports = router; 
+module.exports = router;

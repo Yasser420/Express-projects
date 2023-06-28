@@ -35,12 +35,27 @@ const CreateRoom = (req, res, next) => {
 
 const getRooms = async (req, res, next) => {
     try {
-        const { status } = req.query;
-        StatusOfRooms = ['Ready', 'Maintaining', 'Occupied'];
-         
+        let { status } = req.query;
+        let PageAsNumber = Number.parseInt(req.query.page);
+        let SizeAsNumber = Number.parseInt(req.query.size);
         let Rooms = [];
+
+        let page = 0;
+        if (!Number.isNaN(PageAsNumber) && PageAsNumber > 0) {
+            page = PageAsNumber
+        }
+
+        let size = 10;
+        if (!Number.isNaN(SizeAsNumber) && SizeAsNumber > 0) {
+            size = SizeAsNumber
+        }
+
+        console.log(page, ' && ', size);
+        StatusOfRooms = ['Ready', 'Maintaining', 'Occupied'];
+
+
         if (!status) {
-            Rooms = await Room.findAll()
+            Rooms = await Room.findAndCountAll({ limit: size, offset: (page * size) })
         }
         else if (status) {
             CapitalStatus = status.charAt(0).toUpperCase() + status.slice(1);
@@ -49,11 +64,14 @@ const getRooms = async (req, res, next) => {
                 next(error)
             }
             else {
-                Rooms = await Room.findAll({ where: { Room_status: CapitalStatus } })
+                Rooms = await Room.findAndCountAll({ limit: size, offset: (page * size), where: { Room_status: CapitalStatus } })
             }
         }
 
-        res.status(200).json({ 'Message': 'Success', 'data': Rooms })
+        res.status(200).json({
+            'Message': 'Success',
+            'data': { 'Content': Rooms.rows, 'totalPages': Math.ceil(Rooms.count/size) }
+        })
 
     } catch (err) {
         const error = new CustomError(err.message, 500);
