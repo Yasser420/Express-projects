@@ -29,7 +29,6 @@ const Reservation = sequelize.define('Reservation', {
         type: DataTypes.INTEGER,
         allowNull: false
     }
-
 })
 
 
