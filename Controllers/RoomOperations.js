@@ -121,8 +121,4 @@ const DeleteRoom = async (req, res, next) => {
         next(error)
     }
 }
-const getRoomsWithStatus = async (req, res, next) => {
-    const status = req.query;
-    console.log(status);
-}
 module.exports = { CreateRoom, getRooms, updateRoom, DeleteRoom, getRoomsWithStatus };
