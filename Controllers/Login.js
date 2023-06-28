@@ -11,7 +11,8 @@ const Employee_login = async (req, res, next) => {
                 const error = new CustomError("The provided password doesnot match the Email ", 400);
                 next(error);;
             } else {
-                const payload = { Email, password };
+                const empID = employee.id ;
+                const payload = { empID ,Email, password };
                 const key = process.env.KEY;
                 const token = JWT.sign(payload, key)
                 res.status(200).json({ 'message': 'Login done successfully', data: { Email, password, token } })
