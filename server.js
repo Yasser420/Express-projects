@@ -2,13 +2,14 @@ const sequelize = require('./Config/database');
 const express = require('express');
 require('dotenv').config();
 require('./Relations/relations');
-const { Errorhandler } = require('./Middleware/ErrorHandler');
+const { Errorhandler } = require('./Utiles/ErrorHandler');
 const { AuthenticateToken } = require('./Middleware/Auth')
 const bodyParser = require('body-parser');
 
 const app = express();
 
 const Login = require('./Routes/Login');
+const CreateAccount = require('./Routes/AccountCreation');
 const RoomOperations = require('./Routes/RoomOperations');
 
 const { urlencoded } = require('body-parser');
@@ -18,6 +19,7 @@ app.use(urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/api/v1/Employee', Login);
+app.use('/api/v1/Client', CreateAccount);
 app.use(AuthenticateToken);
 
 app.use('/api/v1/Employee', RoomOperations);
