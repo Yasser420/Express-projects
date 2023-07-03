@@ -9,27 +9,21 @@ const Reservation = sequelize.define('Reservation', {
         allowNull: false,
         unique: true
     },
- 
-    Check_in: {
-        type: DataTypes.DATE,
-        validate: {
-            isAfter: new Date().toISOString().split('T')[0]
-        }
-    },
-    Check_out: {
-        type: DataTypes.DATE,
-        validate: {
-            isAfter: sequelize.col('Check_in'),
-        }
-    },
     Is_Reserved_in: {
         type: DataTypes.DATEONLY
     },
+    begin_of_reservation:{
+     type:DataTypes.DATE , 
+     allowNull:false , 
+    }, 
     Reservation_days: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },  
+    status:{
+        type:DataTypes.STRING ,
+        defaultValue:'pending'
     }
 })
-
 
 module.exports = Reservation; 
