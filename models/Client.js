@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../Config/database');
 const Reservation = require('./Reservation')
-const valid_Password = require('../Utiles/valid_password')  ;
+const valid_Password = require('../Utiles/valid_password');
 
 const Client = sequelize.define('Client', {
     id: {
@@ -21,7 +21,10 @@ const Client = sequelize.define('Client', {
     },
     Email: {
         type: DataTypes.STRING,
-        unique: true,
+        unique:{
+            args:true , 
+            msg:'The Email is already used for other account'
+        } , 
         allowNull: false,
     },
     password: {
@@ -37,6 +40,10 @@ const Client = sequelize.define('Client', {
     },
     phoneNumber: {
         type: DataTypes.STRING,
+        unique: {
+            args:true , 
+            msg: 'The phone number is used for other account'
+        },
     },
 })
 

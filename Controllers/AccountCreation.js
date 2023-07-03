@@ -23,6 +23,7 @@ const CreateAccount = async (req, res, next) => {
         }
     } catch (err) {
         const error = new CustomError('Internal Server Error ', 500)
+        console.log(err);
         next(error);
     }
 }

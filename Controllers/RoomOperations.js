@@ -27,7 +27,7 @@ const CreateRoom = (req, res, next) => {
             next(error);
         })
     } catch (err) {
-        const error = new CustomError("server error", 500);
+        const error = new CustomError("Internal Server Error", 500);
         next(error);
     }
 
@@ -70,7 +70,7 @@ const getRooms = async (req, res, next) => {
 
         res.status(200).json({
             'Message': 'Success',
-            'data': { 'Content': Rooms.rows, 'totalPages': Math.ceil(Rooms.count/size) }
+            'data': { 'Content': Rooms.rows, 'totalPages': Math.ceil(Rooms.count / size) }
         })
 
     } catch (err) {
@@ -99,7 +99,7 @@ const updateRoom = async (req, res, next) => {
             where: { id: req.params.id },
             returning: true
         })
-        res.status(200).json({ 'Message': `The Room with id=${req.params.id} is updated successfully`, 'data': updatedRoom })
+        res.status(200).json({ 'Message': `The Room is updated successfully` })
     } catch (err) {
         const error = new CustomError(err.message, 400);
         next(error);
@@ -121,4 +121,4 @@ const DeleteRoom = async (req, res, next) => {
         next(error)
     }
 }
-module.exports = { CreateRoom, getRooms, updateRoom, DeleteRoom, getRoomsWithStatus };
+module.exports = { CreateRoom, getRooms, updateRoom, DeleteRoom };

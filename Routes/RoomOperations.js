@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { CreateRoom, getRooms, updateRoom, DeleteRoom, getRoomsWithStatus } = require('../Controllers/RoomOperations');
-const { AuthenticateToken } = require('../Middleware/Auth')
 
 const multer = require('multer');
 

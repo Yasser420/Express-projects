@@ -37,6 +37,6 @@ app.use(Errorhandler);
 
 app.listen(3000, async () => {
     console.log('Start listening on port 3000... ');
-    await sequelize.authenticate()
+    await sequelize.sync()
     console.log('Database synchronized successfully');
 })

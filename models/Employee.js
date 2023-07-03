@@ -12,12 +12,9 @@ const Employee = sequelize.define('Employee', {
     },
     Email: {
         type: DataTypes.STRING,
-        unique: true,
-        validate: {
-            isEmail: {
-                args: true,
-                msg: 'The provided Email is not acceptable '
-            }
+        unique: {
+            agrs:true , 
+            msg:'the Email is laready used for other account'
         }
     },
     password: {

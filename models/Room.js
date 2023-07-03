@@ -14,8 +14,9 @@ const Room = sequelize.define('Room', {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: {
-            msg: 'The Entered Room number is already exists'
-        },
+            args:true , 
+            msg:'The room number is exists'
+        } , 
         validate: {
             isNumeric: true,
 
@@ -34,7 +35,6 @@ const Room = sequelize.define('Room', {
         type: DataTypes.STRING,
         defaultValue: 'Ready',
         allowNull: false,
-        unique: true
     },
     Max_guests: {
         type: DataTypes.INTEGER,
@@ -55,18 +55,6 @@ const Room = sequelize.define('Room', {
                 msg:'The Image file required'
             }
         }
-    }
-
-})
-Room.addHook('beforeCreate', async (room) => {
-    const existingRoom = await Room.findOne({
-        where: {
-            Room_number: room.Room_number
-        }
-
-    });
-    if (existingRoom) {
-        throw new Error('The Entered Room number is taken')
     }
 
 })
