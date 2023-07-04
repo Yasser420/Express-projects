@@ -13,7 +13,7 @@ const Login = require('./Routes/Login');
 
 const CreateAccount = require('./Routes/AccountCreation');
 const RoomOperations = require('./Routes/RoomOperations');
-
+const ReservationOperation = require('./Routes/reservation_requests') ;
 const { urlencoded } = require('body-parser');
 
 app.use(express.json());
@@ -26,6 +26,7 @@ app.use('/api/v1/Client', CreateAccount);
 app.use(AuthenticateToken);
 
 app.use('/api/v1/Employee', RoomOperations);
+app.use('/api/v1/Client', ReservationOperation) ;
 app.use('*', (req, res, next) => {
     const error = new Error(`The URL ${req.originalUrl} not found`);
     error.status = 'Failed to access';
@@ -37,6 +38,6 @@ app.use(Errorhandler);
 
 app.listen(3000, async () => {
     console.log('Start listening on port 3000... ');
-    await sequelize.sync()
+    await sequelize.sync({})
     console.log('Database synchronized successfully');
 })
