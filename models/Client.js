@@ -40,10 +40,7 @@ const Client = sequelize.define('Client', {
     },
     phoneNumber: {
         type: DataTypes.STRING,
-        unique: {
-            args:true , 
-            msg: 'The phone number is used for other account'
-        },
+        unique:true
     },
 })
 
