@@ -4,7 +4,7 @@ const Employee = require('../models/Employee');
 const Room = require('../models/Room');
 
 Client.hasMany(Reservation, { as: 'ClientReservation', foreignKey: 'Client_id' });
-Employee.hasMany(Reservation, { as: 'EmployeeReservation', foreignKey: 'Employee_id' });
+Employee.hasMany(Reservation, { as: 'EmployeeReservation', foreignKey: {name:'Employee_id',allowNull:true }});
 Room.hasMany(Reservation, { as: 'RoomReservation', foreignKey: 'Room_id' });
 
 Reservation.belongsTo(Client, { foreignKey: 'Client_id' });
