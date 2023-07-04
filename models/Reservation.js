@@ -9,20 +9,23 @@ const Reservation = sequelize.define('Reservation', {
         allowNull: false,
         unique: true
     },
-    Is_Reserved_in: {
+    guest_name: {
+        type: DataTypes.STRING
+    },
+    date_of_request: {
         type: DataTypes.DATEONLY
     },
-    begin_of_reservation:{
-     type:DataTypes.DATE , 
-     allowNull:false , 
-    }, 
-    Reservation_days: {
+    begin_of_reservation: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    Reservation_days_num: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },  
-    status:{
-        type:DataTypes.STRING ,
-        defaultValue:'pending'
+    },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: 'pending'
     }
 })
 
