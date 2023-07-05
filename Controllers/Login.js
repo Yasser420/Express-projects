@@ -13,8 +13,9 @@ const Employee_login = async (req, res, next) => {
                 const error = new CustomError("The provided password doesnot match the Email ", 400);
                 next(error);;
             } else {
+                console.log(Email , password);
                 const empID = employee.id ;
-                const payload = { empID, Email, password, type: 'employee' };
+                const payload = { empID, Email, type: 'employee' };
                 const key = process.env.KEY;
                 const token = JWT.sign(payload, key)
                 res.status(200).json({ 'message': 'Login done successfully', data: { Email, password, token } })
@@ -34,7 +35,6 @@ const Employee_login = async (req, res, next) => {
 }
 const Client_login= async(req,res,next)=>{
     try {
-        console.log('yasser');
         const { Email, password } = req.body;
         const client = await Client.findOne({ where: { Email: Email } });
         if (client) {
@@ -42,15 +42,16 @@ const Client_login= async(req,res,next)=>{
                 const error = new CustomError("The provided password doesnot match the Email ", 400);
                 next(error);
             } else {
-                const clientID =  Client.id;
-                const payload = { clientID, Email, password , type:'client'};
+                const clientID =  client.id;
+                const payload = { clientID, Email, type:'client'};
+                console.log(payload);
                 const key = process.env.KEY;
                 const token = JWT.sign(payload, key)
                 res.status(200).json({ 'message': 'Login done successfully', data: { Email, password, token } })
             }
         }
         else {
-            console.log('ayyyya');
+            console.log('hcs');
             const error = new CustomError("The provided Email is not found", 404);
             next(error);
 
