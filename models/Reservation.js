@@ -25,7 +25,12 @@ const Reservation = sequelize.define('Reservation', {
     },
     status: {
         type: DataTypes.STRING,
-        defaultValue: 'pending'
+        defaultValue: 'Pending',
+        validate: {
+            defaultValue: 'Pending',
+            isIn: [['Pending', 'Accepted', 'Rejected']],
+            msg: 'The status must be Pending , Accepted , or Rejected'
+        }
     }
 })
 
