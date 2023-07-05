@@ -38,7 +38,7 @@ const booking_request = async (req, res, next) => {
 const handle_request = async (req, res, next) => {
     try {
         const booking_id = req.params.id;
-        const { accept } = req.body;
+        let { status } = req.query;
 
         const booking_record = await Reservation.findByPk(booking_id);
 
@@ -47,16 +47,15 @@ const handle_request = async (req, res, next) => {
             next(error)
         }
 
-        if (accept == "true") {
+        if (status) {
+            status = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() ;
             const empID = req.user.empID
-            console.log(req.user);
 
             try {
-                console.log('hay');
                 const process = await sequelize.transaction(async (t) => {
-                    booking_record.status = "Accepted";
+                    booking_record.status = status;
                     booking_record.Employee_id = empID;
-                    await booking_record.save({ transaction: t });
+                    await booking_record.save({ transaction: t }); 
                     return res.status(200).json({ 'Message': 'Success' })
                 })
             } catch (err) {
