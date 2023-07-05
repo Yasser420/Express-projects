@@ -26,10 +26,19 @@ const Reservation = sequelize.define('Reservation', {
     status: {
         type: DataTypes.STRING,
         defaultValue: 'Pending',
-        validate: {
-            isIn: [['Pending', 'Accepted', 'Rejected']]
+    }
+},
+    {
+        hooks: {
+            beforeValidate: (record) => {
+                const valid_status = ["Pending", "Rejected", "Accepted"];
+                if (!valid_status.includes(record.status)) {
+                    throw new Error("Status must be Pending , Rejected , or Accepted");
+                }
+            }
         }
     }
-})
+)
+
 
 module.exports = Reservation; 
