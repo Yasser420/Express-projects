@@ -27,6 +27,7 @@ app.use(AuthenticateToken);
 
 app.use('/api/v1/Employee', RoomOperations);
 app.use('/api/v1/Client', ReservationOperation) ;
+app.use('/api/v1/Employee', ReservationOperation);
 app.use('*', (req, res, next) => {
     const error = new Error(`The URL ${req.originalUrl} not found`);
     error.status = 'Failed to access';
