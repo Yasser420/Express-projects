@@ -31,7 +31,6 @@ const booking_request = async (req, res, next) => {
         console.log(error.message);
         next(err);
     }
-
 }
 
 //this functinon is used from the employee,  which can accept or reject the request of booking from the Client 
@@ -49,25 +48,23 @@ const handle_request = async (req, res, next) => {
 
         if (status) {
             status = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() ;
-            const empID = req.user.empID
-
+            const empID = req.user.empID ;
             try {
                 const process = await sequelize.transaction(async (t) => {
-                    booking_record.status = status;
-                    booking_record.Employee_id = empID;
+                        booking_record.status = status;
+                        booking_record.Employee_id = empID;
+                    
                     await booking_record.save({ transaction: t }); 
-                    return res.status(200).json({ 'Message': 'Success' })
+                    return res.status(200).json({ 'Message': 'The request done Successfully ' })
                 })
             } catch (err) {
-                const error = new CustomError(err.message, 500);
-                next(error)
+                const error = new CustomError(err.message, 400);
+                next(error) ;
             }
         }
     } catch (error) {
         const err = new CustomError(err.message, 500);
         console.log(err);
-        console.log('----------error-----------');
-
         next(error)
     }
 }
